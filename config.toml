@@ -1,4 +1,4 @@
-baseurl = "https://github.com/manideep-mvp/blogpost.git/"
+baseurl = "https://zealous-goldwasser-c03459.netlify.com/"
 builddrafts = false
 canonifyurls = false
 languageCode = "en-US"
