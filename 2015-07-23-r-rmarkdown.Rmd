@@ -1,0 +1,150 @@
+---
+title: "My first Post"
+author: "Manideep Varma Penmathsa"
+tags: ["R Markdown", "plot", "shinyApp"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# My first ever Shiny App 
+
+When I started this semester, I never realized I would be preparing my first ever Shiny App using R language. It is a great learning experience and I had fun creating this simple App. You can find it here:
+
+<https://manideep999.shinyapps.io/Problemset3-Manideep/>.
+
+What started out as a regular homework problem, turned into something amazing! 
+
+This App creates a wordcloud plot output by taking inputs of words from three different Shakespere Novels. It also has options for manual file upload and user text input!
+
+
+Here is a sample image output for this beautiful Shiny App:
+
+
+![](/shiny.jpg)
+
+
+
+You can find the source code I used to create this simple app here:
+
+
+```{r eval = FALSE,message=FALSE, warning=FALSE, paged.print=FALSE}
+"
+library(shiny)
+library(quanteda)
+library(wordcloud)
+library(memoise)
+library(ggplot2)
+library(shinythemes)
+library(RColorBrewer)
+
+
+
+getDfm <- function(book, minterms, stem, punct, ngrams)
+  {
+ 
+  if (!(book %in% books))
+    stop("Unknown book")
+  
+  # looks in data sub-folder for the files (e.g., romeo.txt, merchant.txt, summer.txt)
+  text <- readLines(sprintf("./data/%s.txt", book), encoding="UTF-8")
+  
+  # could also pass text column of dataframe instead
+  myCorpus <- corpus(text)
+  
+  
+  if(ngrams == "unigram"){
+    ng = 1
+  }else if(ngrams == "both"){
+    ng = 1:2
+  }else if(ngrams == "bigram"){
+    ng = 2
+  }
+  
+  dfm(myCorpus, remove = stopwords('english'), 
+      remove_punct = punct, stem = stem, ngrams = ng) %>%
+    dfm_trim(min_termfreq = minterms, verbose = FALSE)
+}
+
+mem_getDfm <- memoise(getDfm)
+
+books <- list("A Mid Summer Night's Dream" = "summer",
+              "The Merchant of Venice" = "merchant",
+              "Romeo and Juliet" = "romeo")
+
+choices = c("Unigrams only" = "unigram",
+            "Unigrams & Bigrams" = "both",
+            "Bigrams only" = "bigram")
+
+ui <- fluidPage(theme = shinytheme("united"),
+  titlePanel("Shakespeare's Plays Word Frequencies"), # Application title
+  
+ 
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("book", label = "Select a Book", choices = books),
+      checkboxInput("stem", label = "Stem words", value = FALSE),
+      checkboxInput("punct", label = "Remove Punctuation", value = TRUE),
+      radioButtons("ngram", label = "Choice of n-grams", choices = choices),
+      sliderInput("minterms", label = "Minimum Frequency", min = 1, max = 50,
+                  value = 10),
+      hr(),
+      actionButton("rerun", label = "Rerun")
+      
+      
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Word Cloud",plotOutput("cloud")),
+        tabPanel("Counts",plotOutput("freq"),height = "600px",width = "100%")
+      )
+    )
+  
+  )
+ 
+
+  
+  
+)
+
+server <- function(input, output) {
+  
+
+ dfm        <- reactive({input$rerun
+    
+    isolate({
+      withProgress({
+        setProgress(message = "Processing corpus...")
+            mem_getDfm(book = input$book, stem = input$stem, punct = input$punct, ngram = input$ngram, minterms = input$minterms)
+      })
+    })
+  })   
+ output$cloud <- renderPlot({
+   v <- dfm()
+   textplot_wordcloud(v,
+                      min_size=0.5,
+                      max_size=6,
+                      max_words=100,
+                      color=brewer.pal(8, "Dark2"))
+ })
+ 
+ output$freq <- renderPlot({
+   v <- dfm()
+   dfm_freq <- textstat_frequency(v, n = 50)
+   dfm_freq$feature <- with(dfm_freq, reorder(feature, frequency)) # sort in descending
+   
+   ggplot(dfm_freq, aes(x = feature, y = frequency)) +
+     geom_point() + coord_flip()+
+     theme(text = element_text(size = 18))})
+}
+
+shinyApp(ui = ui, server = server)
+"
+```
+
+
+
+Shiny offers a great interactivity and the possibilities are endless with this simple and easy to learn syntax!
+
+
