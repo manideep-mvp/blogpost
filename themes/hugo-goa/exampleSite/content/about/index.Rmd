@@ -1,0 +1,14 @@
++++
+categories = ["about"]
+comments = false
+date = "2016-10-02T22:55:05-04:00"
+draft = false
+slug = ""
+tags = ["about"]
+title = "About"
+
+showpagemeta = false
++++
+
+I was born in India and moved to the United States for my Bachelor's degree in 2014. I did my Bachelor's in Electrical Engineering in Illinois Institute of Technology, Chicago. After graduating in May 2018, I moved to Charlotte and started my Master's degree at UNCC. I am doing my Master's in Data Science and Business Analytics. I love to travel, take pictures, and learn new things everyday.
+

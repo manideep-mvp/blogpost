@@ -1,0 +1,15 @@
+---
+title: My First Post
+author: Manideep Varma Penmathsa
+date: '2019-04-26'
+slug: first-post
+categories:
+  - R
+tags:
+  - R Markdown
+comments: no
+showcomments: yes
+showpagemeta: yes
+---
+
+Gavin Belson’s name has long been synonymous with innovation—but beyond his work at Hooli, do we even know the man behind the rampant success? In a Code/Rag exclusive, Belson revealed to us 10 things about himself that aren’t common knowledge.

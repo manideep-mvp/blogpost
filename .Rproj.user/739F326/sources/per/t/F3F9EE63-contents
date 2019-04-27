@@ -1,0 +1,55 @@
+baseurl = "https://github.com/manideep-mvp/blogpost.git/"
+builddrafts = false
+canonifyurls = false
+languageCode = "en-US"
+contentdir = "content"
+layoutdir = "layouts"
+publishdir = "public"
+
+author = "Manideep Varma Penmathsa"
+title = "Welcome to Manideep's Blog!"
+
+theme = "hugo-goa"
+
+
+googleAnalytics = ""
+enableRobotsTXT = true
+
+## Site Settings
+[params]
+author = "Manideep Varma Penmathsa"
+intro = "Enthusiastic Data Scientist"
+description = "Studying Master's degree at UNCC  <br/> \"Stay hungry, Stay foolish. - Steve Jobs\""
+authorimage = "pic.jpg"
+dateformat = "04-26-2019"
+
+## Site Meta Settings
+[params.meta]
+description = "Simple minimalist theme"
+keywords = "minimalist,blog,goa,hugo,developer"
+
+## Social Accounts
+[params.social]
+github = "manideep-mvp"
+linkedin = "manideepvp"
+twitter = "____MVP____"
+email = "manideep.mvp@gmail.com"
+
+## Extras
+[params.extra]
+poweredby = true
+highlightjs = true
+socialmarkup = true
+
+## Main Menu
+[[menu.main]]
+    name = "blog"
+    weight = 100
+    identifier = "blog"
+    url = "/blog/"
+[[menu.main]]
+    name = "about"
+    identifier = "about"
+    weight = 200
+    url = "/about/"
+

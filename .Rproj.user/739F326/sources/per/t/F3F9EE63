@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1556332703334.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4135157047",
+    "id" : "F3F9EE63",
+    "lastKnownWriteTime" : 1556381699,
+    "last_content_update" : 1556381699271,
+    "path" : "C:/Users/mpenm/Desktop/School/DSBA 5122 - Visual Analytics/ProblemSet4_Manideep/blogpost/config.toml",
+    "project_path" : "config.toml",
+    "properties" : {
+        "cursorPosition" : "35,32",
+        "scrollLine" : "26"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}

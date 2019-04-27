@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Welcome to Manideep&#39;s Blog!</title>
+    <link>/manideep-mvp/blogpost.git/tags/</link>
+    <description>Recent content in Tags on Welcome to Manideep&#39;s Blog!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    
+	<atom:link href="/manideep-mvp/blogpost.git/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R Markdown</title>
+      <link>/manideep-mvp/blogpost.git/tags/r-markdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/manideep-mvp/blogpost.git/tags/r-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plot</title>
+      <link>/manideep-mvp/blogpost.git/tags/plot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/manideep-mvp/blogpost.git/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shinyApp</title>
+      <link>/manideep-mvp/blogpost.git/tags/shinyapp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/manideep-mvp/blogpost.git/tags/shinyapp/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

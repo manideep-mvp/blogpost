@@ -1,0 +1,133 @@
+---
+title: "My first Post"
+author: "Manideep Varma Penmathsa"
+tags: ["R Markdown", "plot", "shinyApp"]
+---
+
+
+
+<div id="my-first-ever-shiny-app" class="section level1">
+<h1>My first ever Shiny App</h1>
+<p>When I started this semester, I never realized I would be preparing my first ever Shiny App using R language. It is a great learning experience and I had fun creating this simple App. You can find it here:</p>
+<p><a href="https://manideep999.shinyapps.io/Problemset3-Manideep/" class="uri">https://manideep999.shinyapps.io/Problemset3-Manideep/</a>.</p>
+<p>What started out as a regular homework problem, turned into something amazing!</p>
+<p>This App creates a wordcloud plot output by taking inputs of words from three different Shakespere Novels. It also has options for manual file upload and user text input!</p>
+<p>Here is a sample image output for this beautiful Shiny App:</p>
+<div class="figure">
+<img src="/shiny.jpg" />
+
+</div>
+<p>You can find the source code I used to create this simple app here:</p>
+<pre class="r"><code>&quot;
+library(shiny)
+library(quanteda)
+library(wordcloud)
+library(memoise)
+library(ggplot2)
+library(shinythemes)
+library(RColorBrewer)
+
+
+
+getDfm &lt;- function(book, minterms, stem, punct, ngrams)
+  {
+ 
+  if (!(book %in% books))
+    stop(&quot;Unknown book&quot;)
+  
+  # looks in data sub-folder for the files (e.g., romeo.txt, merchant.txt, summer.txt)
+  text &lt;- readLines(sprintf(&quot;./data/%s.txt&quot;, book), encoding=&quot;UTF-8&quot;)
+  
+  # could also pass text column of dataframe instead
+  myCorpus &lt;- corpus(text)
+  
+  
+  if(ngrams == &quot;unigram&quot;){
+    ng = 1
+  }else if(ngrams == &quot;both&quot;){
+    ng = 1:2
+  }else if(ngrams == &quot;bigram&quot;){
+    ng = 2
+  }
+  
+  dfm(myCorpus, remove = stopwords(&#39;english&#39;), 
+      remove_punct = punct, stem = stem, ngrams = ng) %&gt;%
+    dfm_trim(min_termfreq = minterms, verbose = FALSE)
+}
+
+mem_getDfm &lt;- memoise(getDfm)
+
+books &lt;- list(&quot;A Mid Summer Night&#39;s Dream&quot; = &quot;summer&quot;,
+              &quot;The Merchant of Venice&quot; = &quot;merchant&quot;,
+              &quot;Romeo and Juliet&quot; = &quot;romeo&quot;)
+
+choices = c(&quot;Unigrams only&quot; = &quot;unigram&quot;,
+            &quot;Unigrams &amp; Bigrams&quot; = &quot;both&quot;,
+            &quot;Bigrams only&quot; = &quot;bigram&quot;)
+
+ui &lt;- fluidPage(theme = shinytheme(&quot;united&quot;),
+  titlePanel(&quot;Shakespeare&#39;s Plays Word Frequencies&quot;), # Application title
+  
+ 
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(&quot;book&quot;, label = &quot;Select a Book&quot;, choices = books),
+      checkboxInput(&quot;stem&quot;, label = &quot;Stem words&quot;, value = FALSE),
+      checkboxInput(&quot;punct&quot;, label = &quot;Remove Punctuation&quot;, value = TRUE),
+      radioButtons(&quot;ngram&quot;, label = &quot;Choice of n-grams&quot;, choices = choices),
+      sliderInput(&quot;minterms&quot;, label = &quot;Minimum Frequency&quot;, min = 1, max = 50,
+                  value = 10),
+      hr(),
+      actionButton(&quot;rerun&quot;, label = &quot;Rerun&quot;)
+      
+      
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel(&quot;Word Cloud&quot;,plotOutput(&quot;cloud&quot;)),
+        tabPanel(&quot;Counts&quot;,plotOutput(&quot;freq&quot;),height = &quot;600px&quot;,width = &quot;100%&quot;)
+      )
+    )
+  
+  )
+ 
+
+  
+  
+)
+
+server &lt;- function(input, output) {
+  
+
+ dfm        &lt;- reactive({input$rerun
+    
+    isolate({
+      withProgress({
+        setProgress(message = &quot;Processing corpus...&quot;)
+            mem_getDfm(book = input$book, stem = input$stem, punct = input$punct, ngram = input$ngram, minterms = input$minterms)
+      })
+    })
+  })   
+ output$cloud &lt;- renderPlot({
+   v &lt;- dfm()
+   textplot_wordcloud(v,
+                      min_size=0.5,
+                      max_size=6,
+                      max_words=100,
+                      color=brewer.pal(8, &quot;Dark2&quot;))
+ })
+ 
+ output$freq &lt;- renderPlot({
+   v &lt;- dfm()
+   dfm_freq &lt;- textstat_frequency(v, n = 50)
+   dfm_freq$feature &lt;- with(dfm_freq, reorder(feature, frequency)) # sort in descending
+   
+   ggplot(dfm_freq, aes(x = feature, y = frequency)) +
+     geom_point() + coord_flip()+
+     theme(text = element_text(size = 18))})
+}
+
+shinyApp(ui = ui, server = server)
+&quot;</code></pre>
+<p>Shiny offers a great interactivity and the possibilities are endless with this simple and easy to learn syntax!</p>
+</div>
